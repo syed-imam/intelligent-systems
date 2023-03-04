@@ -60,3 +60,15 @@ sh_cpt = TabularCPD(
     ],
     state_names={'SH': sh_states, 'E': e_states, 'P': p_states}
 )
+
+model.add_cpds(e_cpt, p_cpt, se_cpt, sh_cpt)
+
+# Create a directed graph object
+graph = nx.DiGraph()
+
+# Add edges from the Bayesian model to the directed graph
+graph.add_edges_from(model.edges())
+
+# Draw the directed graph
+nx.draw(graph, with_labels=True)
+plt.show()
