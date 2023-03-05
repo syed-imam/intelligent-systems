@@ -75,7 +75,7 @@ check_outlet :-
 
 print_list :-
     findall(X, rules_triggered(X), List),
-    write("\nExplanation of how diagnosis was reached\n"),
+    write("\n\nExplanation of how diagnosis was reached\n"),
     write(List).
 
 /* Starting assumption is that the lamp does not work, we continue to check_power */
