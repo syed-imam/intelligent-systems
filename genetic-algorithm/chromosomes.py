@@ -2,11 +2,10 @@ import random
 from deap import base, creator, tools
 
 # Define the fitness function
-def my_fitness(individual):
+def calculate_fitness(individual):
     a, b, c, d, e, f, g, h = individual
     return (a + b) - (c + d) + (e + f) - (g + h),
 
-# Set up the DEAP framework for the problem
 creator.create("FitnessMax", base.Fitness, weights=(1.0,))
 creator.create("Individual", list, fitness=creator.FitnessMax)
 
@@ -14,12 +13,11 @@ toolbox = base.Toolbox()
 toolbox.register("attr_int", random.randint, 0, 9)
 toolbox.register("individual", tools.initRepeat, creator.Individual, toolbox.attr_int, n=8)
 toolbox.register("population", tools.initRepeat, list, toolbox.individual)
-toolbox.register("evaluate", my_fitness)
+toolbox.register("evaluate", calculate_fitness)
 toolbox.register("mate", tools.cxOnePoint)
 toolbox.register("mutate", tools.mutUniformInt, low=0, up=9, indpb=0.1)
 toolbox.register("select", tools.selBest)
 
-# Initialize the population
 initial_population = [
     [6, 5, 4, 1, 3, 5, 3, 2],
     [8, 7, 1, 2, 6, 6, 0, 1],

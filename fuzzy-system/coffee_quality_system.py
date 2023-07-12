@@ -32,25 +32,27 @@ quality['high'] = fuzz.trimf(quality.universe, [50, 100, 100])
 rule1 = ctrl.Rule(aroma['low'] & aftertaste['low'] & acidity['low'], quality['low'])
 rule2 = ctrl.Rule(aroma['medium'] & aftertaste['medium'] & acidity['medium'], quality['medium'])
 rule3 = ctrl.Rule(aroma['high'] & aftertaste['high'] & acidity['high'], quality['high'])
+rule4 = ctrl.Rule(aroma['low'] & aftertaste['high'], quality['medium'])
+rule5 = ctrl.Rule(aftertaste['high'] & acidity['medium'], quality['medium'])
+rule6 = ctrl.Rule(acidity['low'] & aftertaste['low'] & aroma['high'], quality['medium'])
 
 # Create the control system with the defined rules
-quality_ctrl = ctrl.ControlSystem([rule1, rule2, rule3])
+quality_ctrl = ctrl.ControlSystem([rule1, rule2, rule3, rule4, rule5, rule6])
 
 # Create a simulator for the control system
-quality_sim = ctrl.ControlSystemSimulation(quality_ctrl)
+quality_simulator = ctrl.ControlSystemSimulation(quality_ctrl)
 
 # Define example input values for aroma, aftertaste, and acidity
-aroma_input = 8
-aftertaste_input = 7
+aroma_input = 6
+aftertaste_input = 8
 acidity_input = 9
 
-# Pass the input values to the simulator
-quality_sim.input['aroma'] = aroma_input
-quality_sim.input['aftertaste'] = aftertaste_input
-quality_sim.input['acidity'] = acidity_input
+quality_simulator.input['aroma'] = aroma_input
+quality_simulator.input['aftertaste'] = aftertaste_input
+quality_simulator.input['acidity'] = acidity_input
 
 # Compute the output quality value
-quality_sim.compute()
+quality_simulator.compute()
 
-# Print the output quality value
-print("Coffee quality:", quality_sim.output['quality'])
+# Print the output coffee quality value
+print("Coffee Quality:", quality_simulator.output['quality'])
